@@ -44,6 +44,21 @@ canvas.addEventListener('mousemove', (e) => {
     moving_mouse = true
 })
 
+//  PARA CAMBIAR EL COLOR
+function change_color(c) {
+    color = c
+
+    context.strokeStyle = color //  color de la linea
+
+    //  necesario para que actualice los cambios
+    context.stroke() 
+}
+
+const delete_all = () => {
+    //  emitimos un evento al servidor
+    socket.emit('delete')
+}
+
 function create_drawing() {
     if (click && moving_mouse && previous_position != null) {
         let drawing = {
@@ -67,14 +82,18 @@ function create_drawing() {
 
 /* escuchando el evento de socket.js */
 socket.on('show_drawing', (drawing) => {    //  obtiene drawing del evento
-    //  para dibujar
-
-    context.beginPath()
-    context.lineWidth = 3   //  grosor de linea
-    context.strokeStyle = drawing.color //  color de la linea
-    context.moveTo(drawing.x_position, drawing.y_position)  //  posicion final
-    context.lineTo(drawing.previous_position.x_position, drawing.previous_position.y_position)  //  posicion inicial
-    context.stroke()    //  para dibujar el trazo
+    if (drawing != null) {
+        //  para dibujar
+        context.beginPath()
+        context.lineWidth = 3   //  grosor de linea
+        context.strokeStyle = drawing.color //  color de la linea
+        context.moveTo(drawing.x_position, drawing.y_position)  //  posicion final
+        context.lineTo(drawing.previous_position.x_position, drawing.previous_position.y_position)  //  posicion inicial
+        context.stroke()    //  para dibujar el trazo
+    } else {
+        //  esto es para limpiar el canvas
+        context.clearRect(0, 0, canvas.width, canvas.height)
+    }
 })
 
 /* esto era para pruebas */

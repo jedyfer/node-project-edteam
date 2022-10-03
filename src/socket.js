@@ -9,6 +9,14 @@ module.exports = (io) => {
             io.emit('show_drawing', data[i])
         }
 
+        //  escuchamos el evento del cliente
+        socket.on('delete', () => {
+            //  vaciamos el arreglo
+            data = []
+            //  limpiamos los datos 
+            io.emit('show_drawing', null)
+        })
+
         socket.on('drawing', (drawing) => { //  escuchando el evento del cliente
             //  almacenando el dibujo dentro del array
             data.push(drawing)

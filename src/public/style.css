@@ -17,6 +17,13 @@ canvas {
     padding: 10px;
 }
 
+.delete {
+    position: absolute;
+    top: 5px;
+    padding: 10px;
+    margin-left: 170px;
+}
+
 .btn {
     width: 30px;
     height: 30px;
@@ -43,4 +50,11 @@ canvas {
 
 .color5 {
     background-color: black;
+}
+
+#btn_delete {
+    width: 30px;
+    height: 30px;
+    border-color: #000;
+    color: red;
 }
