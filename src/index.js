@@ -17,7 +17,7 @@ app.set('port', 3000)
 //  middleware
 app.use(express.static(path.join(__dirname, 'public'))) //  acceso a mis archivos html css js
 
-app.listen(app.get('port'), () => {
+server.listen(app.get('port'), () => {
     console.log('App corriendo en el puerto ' + app.get('port'))
 })
 
