@@ -1,6 +1,9 @@
 
 module.exports = (io) => {
-    data = []
+    let data = []
+
+    //  para ver en numero de usuarios conectados
+    let users = 0
 
     //  console.log('Archivo de sockets')
     io.on('connection', (socket) => {   
@@ -8,6 +11,10 @@ module.exports = (io) => {
             //  enviando cada dibujo para que sea visible por usuarios que recien se conecten
             io.emit('show_drawing', data[i])
         }
+
+        //  incrementa cada que un usuario se conecte
+        users += 1
+        io.emit('users', users)
 
         //  escuchamos el evento del cliente
         socket.on('delete', () => {
@@ -23,6 +30,12 @@ module.exports = (io) => {
 
             //  emitiendo el evento show_drawing para los demas usuarios
             io.emit('show_drawing', drawing)
+        })
+
+        socket.on('disconnect', () => {
+            //  dismuir usuarios al desconectarse
+            users -= 1
+            io.emit('users', users)
         })
     })
 }

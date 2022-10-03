@@ -11,6 +11,9 @@ let color = 'black'
 const canvas = document.getElementById('canvas')
 const context = canvas.getContext('2d')
 
+//  users
+const users = document.getElementById('users')
+
 const width = window.innerWidth //  ancho del navegador
 const height = window.innerHeight   //  alto
 
@@ -94,6 +97,11 @@ socket.on('show_drawing', (drawing) => {    //  obtiene drawing del evento
         //  esto es para limpiar el canvas
         context.clearRect(0, 0, canvas.width, canvas.height)
     }
+})
+
+//  cliente escuchando evento del servidor
+socket.on('users', (number) => {
+    users.innerHTML = `Número de usuarios conectados: ${number}`
 })
 
 /* esto era para pruebas */
