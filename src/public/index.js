@@ -5,7 +5,7 @@ let click = false
 let moving_mouse = false
 let x_position = 0
 let y_position = 0
-let previous_position = { x_position: 0, y_position: 0 }    //  canvas requiere una posicion inicial
+let previous_position = null    //  canvas requiere una posicion inicial
 let color = 'black'
 
 const canvas = document.getElementById('canvas')
@@ -43,3 +43,34 @@ canvas.addEventListener('mousemove', (e) => {
 
     moving_mouse = true
 })
+
+function create_drawing() {
+    if (click && moving_mouse && previous_position != null) {
+        let drawing = {
+            x_position,
+            y_position,
+            color,
+            previous_position
+        }
+
+        show_drawing(drawing)
+    }
+
+    previous_position = { x_position, y_position }  //  iguala a x_position: x_position
+
+    //  ejecucion en cada cierto tiempo
+    setTimeout(create_drawing, 25)
+}
+
+function show_drawing(drawing) {
+    //  para dibujar
+
+    context.beginPath()
+    context.lineWidth = 3   //  grosor de linea
+    context.strokeStyle = drawing.color //  color de la linea
+    context.moveTo(drawing.x_position, drawing.y_position)  //  posicion final
+    context.lineTo(drawing.previous_position.x_position, drawing.previous_position.y_position)  //  posicion inicial
+    context.stroke()    //  para dibujar el trazo
+}
+
+create_drawing()    //  llamamos a la funcion
