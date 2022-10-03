@@ -1,0 +1,6 @@
+# inicializar
+
+npm init --y
+
+npm i express socket.io
+npm i nodemon -D
