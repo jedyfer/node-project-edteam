@@ -53,7 +53,10 @@ function create_drawing() {
             previous_position
         }
 
-        show_drawing(drawing)
+        //  show_drawing(drawing)
+
+        //  CREACION DE SOCKETS para que sea visible por los demas usuarios
+        socket.emit('drawing', drawing)
     }
 
     previous_position = { x_position, y_position }  //  iguala a x_position: x_position
@@ -62,7 +65,8 @@ function create_drawing() {
     setTimeout(create_drawing, 25)
 }
 
-function show_drawing(drawing) {
+/* escuchando el evento de socket.js */
+socket.on('show_drawing', (drawing) => {    //  obtiene drawing del evento
     //  para dibujar
 
     context.beginPath()
@@ -71,6 +75,18 @@ function show_drawing(drawing) {
     context.moveTo(drawing.x_position, drawing.y_position)  //  posicion final
     context.lineTo(drawing.previous_position.x_position, drawing.previous_position.y_position)  //  posicion inicial
     context.stroke()    //  para dibujar el trazo
-}
+})
+
+/* esto era para pruebas */
+/* function show_drawing(drawing) {
+    //  para dibujar
+
+    context.beginPath()
+    context.lineWidth = 3   //  grosor de linea
+    context.strokeStyle = drawing.color //  color de la linea
+    context.moveTo(drawing.x_position, drawing.y_position)  //  posicion final
+    context.lineTo(drawing.previous_position.x_position, drawing.previous_position.y_position)  //  posicion inicial
+    context.stroke()    //  para dibujar el trazo
+} */
 
 create_drawing()    //  llamamos a la funcion
